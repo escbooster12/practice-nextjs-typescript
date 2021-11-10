@@ -1,3 +1,17 @@
 {
-  "messages": []
+  "users": [
+    {
+      "id": 1,
+      "email": "user@test.com",
+      "password": "password"
+    }
+  ],
+  "messages": [
+    {
+      "email": "test@gmail.com",
+      "name": "John Doe",
+      "message": "This is a testing message",
+      "id": 1
+    }
+  ]
 }

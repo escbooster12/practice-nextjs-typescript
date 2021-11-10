@@ -14,6 +14,9 @@ const MainNavigation = (props) => {
       <nav>
         <ul>
           <li>
+            <Link href="/signup">Signup</Link>
+          </li>
+          <li>
             <Link href="/posts">Posts</Link>
           </li>
           <li>

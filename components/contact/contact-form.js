@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-import Notification from '../ui/notification';
-import { saveMessage } from '../../pages/api/contact';
-import { getNotifications } from '../../lib/contact-util';
+import { saveMessage } from '../../api/contact';
+import useNotification from '../../hooks/useNotification';
 
 import classes from './contact-form.module.css';
 
@@ -10,12 +9,9 @@ const ContactForm = (props) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
-  const [requestStatus, setRequestStatus] = useState();
-  const [requestError, setRequestError] = useState();
+  const { updateNotificationStates, Notification } = useNotification();
 
-  let notification = getNotifications(requestStatus, requestError);
-
-  const clearStates = (params) => {
+  const clearStates = () => {
     setEmail('');
     setName('');
     setMessage('');
@@ -23,28 +19,25 @@ const ContactForm = (props) => {
 
   const sendMessageHandler = async (event) => {
     event.preventDefault();
-    setRequestStatus('pending');
+    updateNotificationStates({
+      status: 'pending',
+      message: 'Your message is on its way!',
+    });
 
     try {
       await saveMessage({ email, name, message });
-      setRequestStatus('success');
+      updateNotificationStates({
+        status: 'success',
+        message: 'Message sent successfully!',
+      });
       clearStates();
     } catch (error) {
-      setRequestStatus('error');
-      setRequestError(error);
+      updateNotificationStates({
+        status: 'failed',
+        message: error,
+      });
     }
   };
-
-  useEffect(() => {
-    if (requestStatus === 'success' || requestStatus === 'error') {
-      const timer = setTimeout(() => {
-        setRequestStatus(null);
-        setRequestError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [requestStatus]);
 
   return (
     <section className={classes.contact}>
@@ -83,8 +76,8 @@ const ContactForm = (props) => {
         <div className={classes.action}>
           <button>Send Message</button>
         </div>
+        <Notification />
       </form>
-      {notification && <Notification {...notification} />}
     </section>
   );
 };
