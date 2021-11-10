@@ -5,12 +5,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "start:db": "json-server -w db.json --port 3004"
   },
   "dependencies": {
+    "axios": "^0.24.0",
+    "gray-matter": "^4.0.3",
+    "json-server": "^0.17.0",
     "next": "12.0.3",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-markdown": "^7.1.0",
+    "react-syntax-highlighter": "^15.4.4"
   },
   "devDependencies": {
     "eslint": "7",
