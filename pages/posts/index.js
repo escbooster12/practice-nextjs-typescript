@@ -1,3 +1,6 @@
+import { Fragment } from 'react';
+import Head from 'next/head';
+
 import AllPosts from '../../components/posts/all-posts';
 
 const DUMMY = [
@@ -32,7 +35,15 @@ const DUMMY = [
 ];
 
 const ListPostPage = (props) => {
-  return <AllPosts posts={DUMMY} />;
+  return (
+    <Fragment>
+      <Head>
+        <title>Post page</title>
+        <meta name="description" content="This is a contact page" />
+      </Head>
+      <AllPosts posts={DUMMY} />
+    </Fragment>
+  );
 };
 
 export default ListPostPage;
